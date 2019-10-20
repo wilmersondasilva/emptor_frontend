@@ -25,18 +25,13 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['dataGroupedByIndicatorCode']),
+        ...mapGetters(['indicatorsGroupedByCode']),
         indicatorGroups() {
-            const keys = Object.keys(this.dataGroupedByIndicatorCode)
+            const keys = Object.keys(this.indicatorsGroupedByCode)
             return keys.map(key => ({
                 code: key,
-                description: this.dataGroupedByIndicatorCode[key].description
+                description: this.indicatorsGroupedByCode[key].description
             }))
-        }
-    },
-    methods: {
-        selectIndicator() {
-            console.log(arguments)
         }
     }
     

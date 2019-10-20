@@ -6,7 +6,7 @@ const state = {
 }
 
 const getters = {
-    dataGroupedByIndicatorCode(state) {
+    indicatorsGroupedByCode(state) {
         return state.data.reduce((dataGrouped, indicator) => {
             if (!dataGrouped[indicator.code]) {
                 dataGrouped[indicator.code] = {
