@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const state = {
     data: [],
-    selectedIndicator: ''
+    selectedIndicator: 'SP.POP.TOTL'
 }
 
 const getters = {
