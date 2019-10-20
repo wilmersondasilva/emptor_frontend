@@ -1,17 +1,29 @@
 <template>
     <div class="dashboard">
         <DashboardHeader />
+        <DashboardIndicatorSelect />
     </div>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
 import DashboardHeader from './components/DashboardHeader.vue'
+import DashboardIndicatorSelect from './components/DashboardIndicatorSelect.vue'
+
+const { mapActions } = createNamespacedHelpers('dashboard')
 
 export default {
-    name: 'Home',
+    name: 'Dasboard',
     components: {
         DashboardHeader,
+        DashboardIndicatorSelect
     },
+    created() {
+        this.fetchData()
+    },
+    methods: {
+        ...mapActions(['fetchData'])
+    }
 }
 </script>
 
