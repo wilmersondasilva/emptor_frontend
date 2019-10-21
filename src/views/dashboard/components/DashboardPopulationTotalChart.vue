@@ -1,5 +1,5 @@
 <template>
-    <div class="dashboard-chart">
+    <div class="dashboard-population-total-chart">
         <div class="chart-header"></div>
         <div class="chart-container">
             <LineChart chart-id="line-dashboard-chart" :chart-data="chartData" />
@@ -27,7 +27,7 @@ const { mapGetters } = createNamespacedHelpers('dashboard')
 const colors = ['#090057', '#003f5c', '#58508d', '#bc5090', '#ff6361']
 
 export default {
-    name: 'DashboardChart',
+    name: 'DashboardPopulationTotalChart',
     components: {
         LineChart
     },
@@ -109,9 +109,8 @@ export default {
 <style lang="stylus">
 border-radius = 2px
 
-.dashboard-chart
+.dashboard-population-total-chart
     width 45vw
-    height 300px
     margin 30px auto 0
 
     .chart-container

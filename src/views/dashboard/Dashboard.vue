@@ -3,6 +3,7 @@
         <DashboardHeader />
         <DashboardIndicatorSelect />
         <DashboardPopulationTotalChart />
+        <DashboardPatentApplicationsChart />
     </div>
 </template>
 
@@ -11,6 +12,7 @@ import { createNamespacedHelpers } from 'vuex'
 import DashboardHeader from './components/DashboardHeader.vue'
 import DashboardIndicatorSelect from './components/DashboardIndicatorSelect.vue'
 import DashboardPopulationTotalChart from './components/DashboardPopulationTotalChart.vue'
+import DashboardPatentApplicationsChart from './components/DashboardPatentApplicationsChart.vue'
 
 const { mapActions } = createNamespacedHelpers('dashboard')
 
@@ -19,7 +21,8 @@ export default {
     components: {
         DashboardHeader,
         DashboardIndicatorSelect,
-        DashboardPopulationTotalChart  
+        DashboardPopulationTotalChart,
+        DashboardPatentApplicationsChart
     },
     created() {
         this.fetchData()
@@ -32,6 +35,6 @@ export default {
 
 <style lang="stylus">
 .dashboard
-    height 100vh
+    height 100%
     background-color #f4f6fc
 </style>
