@@ -23,7 +23,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import LineChart from '@/components/shared/LineChart'
 
-const { mapGetters, mapState } = createNamespacedHelpers('dashboard')
+const { mapGetters } = createNamespacedHelpers('dashboard')
 const colors = ['#090057', '#003f5c', '#58508d', '#bc5090', '#ff6361']
 
 export default {
@@ -33,6 +33,7 @@ export default {
     },
     data() {
         return {
+            indicatorCode: 'SP.POP.TOTL',
             firstYear: 0,
             lastYear: 0,
         }
@@ -45,7 +46,6 @@ export default {
     },
     computed: {
         ...mapGetters(['indicatorsGroupedByCode']),
-        ...mapState(['selectedIndicator']),
         chartData() {
             return  {
                 labels: [...this.filteredYears],
@@ -56,7 +56,7 @@ export default {
             return [...this.years].filter(year => year >= this.firstYear && year <= this.lastYear)
         },
         years() {
-            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
+            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
             if (!indicator)
                 return []
             
@@ -70,7 +70,7 @@ export default {
             return [...this.years].filter(year => year >= this.firstYear)
         },
         datasets() {
-            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
+            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
             if (!indicator)
                 return []
             
@@ -134,6 +134,5 @@ border-radius = 2px
         justify-content space-evenly
 
         .select
-            // background-color #000
             width 45%
 </style>

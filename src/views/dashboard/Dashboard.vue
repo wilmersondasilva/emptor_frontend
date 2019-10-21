@@ -2,7 +2,7 @@
     <div class="dashboard">
         <DashboardHeader />
         <DashboardIndicatorSelect />
-        <DashboardChart />
+        <DashboardPopulationTotalChart />
     </div>
 </template>
 
@@ -10,7 +10,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import DashboardHeader from './components/DashboardHeader.vue'
 import DashboardIndicatorSelect from './components/DashboardIndicatorSelect.vue'
-import DashboardChart from './components/DashboardChart.vue'
+import DashboardPopulationTotalChart from './components/DashboardPopulationTotalChart.vue'
 
 const { mapActions } = createNamespacedHelpers('dashboard')
 
@@ -19,7 +19,7 @@ export default {
     components: {
         DashboardHeader,
         DashboardIndicatorSelect,
-        DashboardChart  
+        DashboardPopulationTotalChart  
     },
     created() {
         this.fetchData()
