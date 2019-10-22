@@ -35,7 +35,7 @@ export default {
     },
     watch: {
         years() {
-            this.selectedYear = Math.max(...this.years)
+            this.selectedYear = Math.max(this.years)
         }
     },
     computed: {

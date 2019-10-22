@@ -4,6 +4,7 @@
         <DashboardIndicatorSelect />
         <DashboardPopulationTotalChart />
         <DashboardPatentApplicationsChart />
+        <DashboardTable />
     </div>
 </template>
 
@@ -13,6 +14,7 @@ import DashboardHeader from './components/DashboardHeader.vue'
 import DashboardIndicatorSelect from './components/DashboardIndicatorSelect.vue'
 import DashboardPopulationTotalChart from './components/DashboardPopulationTotalChart.vue'
 import DashboardPatentApplicationsChart from './components/DashboardPatentApplicationsChart.vue'
+import DashboardTable from './components/DashboardTable.vue'
 
 const { mapActions } = createNamespacedHelpers('dashboard')
 
@@ -22,7 +24,8 @@ export default {
         DashboardHeader,
         DashboardIndicatorSelect,
         DashboardPopulationTotalChart,
-        DashboardPatentApplicationsChart
+        DashboardPatentApplicationsChart,
+        DashboardTable
     },
     created() {
         this.fetchData()
@@ -37,4 +40,7 @@ export default {
 .dashboard
     height 100%
     background-color #f4f6fc
+
+    .dashboard-population-total-chart, .dashboard-patent-applications-chart
+        display none
 </style>

@@ -1,0 +1,134 @@
+<template>
+    <div class="dashboard-table">
+        <div class="header">
+            <select class="select select-year" v-model="selectedYear">
+                <option v-for="year in years" :key="year" :value="year">
+                    {{ year }}
+                </option>
+            </select>
+        </div>
+        <table class="indicator-table">
+            <thead>
+                <tr>
+                    <th v-for="column in columns" :key="column.title" :class="column.class">{{ column.title }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="row" v-for="row in data" :key="row.id">
+                    <td v-for="column in columns" :key="column.title" :class="column.class">
+                        {{ 
+                            column.formatter ? column.formatter(row[column.attribute]) : row[column.attribute] 
+                        }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<script>
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('dashboard')
+
+export default {
+    name: 'DashboardTable',
+    filters: {
+        number(value) {
+            return Number(value).toLocaleString()
+        }
+    },
+    data() {
+        return {
+            indicatorCode: 'SP.POP.TOTL',
+            columns: [
+                {
+                    title: 'Country',
+                    attribute: 'country_name',
+                    class: 'country',
+                },
+                {
+                    title: 'Year',
+                    attribute: 'year',
+                    class: 'year',
+                },
+                {
+                    title: 'Value',
+                    attribute: 'value',
+                    class: 'value',
+                    formatter: (value) => {
+                        return Number(value).toLocaleString()
+                    } 
+                }
+            ],
+            selectedYear: 2017
+        }
+    },
+    watch: {
+        years() {
+            // this.selectedYear = Math.max(this.years)
+        }
+    },
+    computed: {
+        ...mapGetters(['indicatorsGroupedByCode']),
+        data() {
+            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
+
+            if (!indicator)
+                return []
+
+            const data = indicator.data.filter(item => item.year === String(this.selectedYear))
+            const sortedData = data.sort((itemA, itemB) => {
+                const countryA = itemA.country_name
+                const countryB = itemB.country_name
+
+                if (countryA < countryB) return -1
+                if (countryA > countryB) return 1
+
+                return 0
+            })
+
+            return sortedData
+        },
+        years() {
+            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
+
+            if (!indicator)
+                return []
+            
+            const setYears = indicator.data.reduce((years, item) => {
+                years.add(item.year)
+
+                return years
+            }, new Set())
+            
+            const sortedYears = [...setYears].sort()
+
+            return sortedYears
+        }
+    }
+}
+</script>
+
+<style lang="stylus" scoped>
+.dashboard-table
+    .indicator-table
+        margin auto
+
+        .row
+            padding 15px 10px
+
+        .country, .year, .value
+            padding 10px 20px
+
+        .year, .value
+            text-align right
+
+        .country
+            text-align left 
+
+        .row + .row
+            margin-top 15px
+            border-top 1px solid #fefefe
+
+</style>
