@@ -1,5 +1,5 @@
 <template>
-    <div class="dashboard-population-total-chart">
+    <div class="dashboard-common-chart">
         <div class="chart-header"></div>
         <div class="chart-container">
             <LineChart chart-id="line-dashboard-chart" :chart-data="chartData" />
@@ -23,7 +23,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import LineChart from '@/components/shared/LineChart'
 
-const { mapGetters } = createNamespacedHelpers('dashboard')
+const { mapGetters, mapState } = createNamespacedHelpers('dashboard')
 const colors = ['#090057', '#003f5c', '#58508d', '#bc5090', '#ff6361']
 
 export default {
@@ -33,7 +33,6 @@ export default {
     },
     data() {
         return {
-            indicatorCode: 'SP.POP.TOTL',
             firstYear: 0,
             lastYear: 0,
         }
@@ -45,6 +44,7 @@ export default {
         }
     },
     computed: {
+        ...mapState(['selectedIndicator']),
         ...mapGetters(['indicatorsGroupedByCode']),
         chartData() {
             return  {
@@ -56,7 +56,7 @@ export default {
             return [...this.years].filter(year => year >= this.firstYear && year <= this.lastYear)
         },
         years() {
-            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
+            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
             if (!indicator)
                 return []
             
@@ -70,7 +70,7 @@ export default {
             return [...this.years].filter(year => year >= this.firstYear)
         },
         datasets() {
-            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
+            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
             if (!indicator)
                 return []
             
@@ -109,9 +109,9 @@ export default {
 <style lang="stylus">
 border-radius = 2px
 
-.dashboard-population-total-chart
-    width 45vw
-    margin 30px auto 0
+.dashboard-common-chart
+    width 100%
+    margin 0 auto
 
     .chart-container
         border-top-left-radius border-radius
