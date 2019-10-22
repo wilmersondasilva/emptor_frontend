@@ -20,6 +20,9 @@
                             column.formatter ? column.formatter(row[column.attribute]) : row[column.attribute] 
                         }}
                     </td>
+                    <td class="edit">
+                        <button class="edit-button" @click="editData(row.id)">Edit</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -29,15 +32,10 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapGetters } = createNamespacedHelpers('dashboard')
+const { mapGetters, mapActions } = createNamespacedHelpers('dashboard')
 
 export default {
     name: 'DashboardTable',
-    filters: {
-        number(value) {
-            return Number(value).toLocaleString()
-        }
-    },
     data() {
         return {
             indicatorCode: 'SP.POP.TOTL',
@@ -106,6 +104,13 @@ export default {
 
             return sortedYears
         }
+    },
+    methods: {
+        ...mapActions(['showModal', 'selectIndicatorToEdit']),
+        editData(id) {
+            this.selectIndicatorToEdit(id)
+            this.showModal()
+        }
     }
 }
 </script>
@@ -130,5 +135,13 @@ export default {
         .row + .row
             margin-top 15px
             border-top 1px solid #fefefe
+
+        .edit-button
+            color #7facff
+            margin 0 20px
+
+            &:focus
+                color #3f51b5
+                outline none
 
 </style>

@@ -5,6 +5,7 @@
         <DashboardPopulationTotalChart />
         <DashboardPatentApplicationsChart />
         <DashboardTable />
+        <DashboardModalForm />
     </div>
 </template>
 
@@ -15,6 +16,7 @@ import DashboardIndicatorSelect from './components/DashboardIndicatorSelect.vue'
 import DashboardPopulationTotalChart from './components/DashboardPopulationTotalChart.vue'
 import DashboardPatentApplicationsChart from './components/DashboardPatentApplicationsChart.vue'
 import DashboardTable from './components/DashboardTable.vue'
+import DashboardModalForm from './components/DashboardModalForm.vue'
 
 const { mapActions } = createNamespacedHelpers('dashboard')
 
@@ -25,7 +27,8 @@ export default {
         DashboardIndicatorSelect,
         DashboardPopulationTotalChart,
         DashboardPatentApplicationsChart,
-        DashboardTable
+        DashboardTable,
+        DashboardModalForm
     },
     created() {
         this.fetchData()
