@@ -160,5 +160,5 @@ border-radius = 2px
         width 70vw
 
     @media screen and (min-width: 1200px)
-        width 55vw
+        width 40vw
 </style>

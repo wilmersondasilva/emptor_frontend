@@ -1,7 +1,7 @@
 <template>
     <Modal v-if="isModalVisible" class="dashboard-modal-form">
         <template v-slot:header>
-            <h1>{{ indicatorToEdit.name }}</h1>
+            <h1 class="title">{{ indicatorToEdit.name }}</h1>
         </template>
 
         <template v-slot:body>
@@ -132,4 +132,11 @@ export default {
 
         .button + .button
             margin-left 10px
+
+    .title
+        width 80%
+        margin auto
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
 </style>
