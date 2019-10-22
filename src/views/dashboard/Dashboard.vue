@@ -1,10 +1,8 @@
 <template>
     <div class="dashboard">
         <DashboardHeader />
-        <DashboardIndicatorSelect />
-        <DashboardPopulationTotalChart />
+        <DashboardCard />
         <DashboardPatentApplicationsChart />
-        <DashboardTable />
         <DashboardModalForm />
     </div>
 </template>
@@ -12,10 +10,8 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import DashboardHeader from './components/DashboardHeader.vue'
-import DashboardIndicatorSelect from './components/DashboardIndicatorSelect.vue'
-import DashboardPopulationTotalChart from './components/DashboardPopulationTotalChart.vue'
+import DashboardCard from './components/DashboardCard.vue'
 import DashboardPatentApplicationsChart from './components/DashboardPatentApplicationsChart.vue'
-import DashboardTable from './components/DashboardTable.vue'
 import DashboardModalForm from './components/DashboardModalForm.vue'
 
 const { mapActions } = createNamespacedHelpers('dashboard')
@@ -24,11 +20,9 @@ export default {
     name: 'Dashboard',
     components: {
         DashboardHeader,
-        DashboardIndicatorSelect,
-        DashboardPopulationTotalChart,
         DashboardPatentApplicationsChart,
-        DashboardTable,
-        DashboardModalForm
+        DashboardModalForm,
+        DashboardCard
     },
     created() {
         this.fetchData()
@@ -43,7 +37,4 @@ export default {
 .dashboard
     height 100%
     background-color #f4f6fc
-
-    .dashboard-population-total-chart, .dashboard-patent-applications-chart
-        display none
 </style>

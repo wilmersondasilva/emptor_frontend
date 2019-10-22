@@ -32,13 +32,12 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapGetters, mapActions } = createNamespacedHelpers('dashboard')
+const { mapGetters, mapState, mapActions } = createNamespacedHelpers('dashboard')
 
 export default {
     name: 'DashboardTable',
     data() {
         return {
-            indicatorCode: 'SP.POP.TOTL',
             columns: [
                 {
                     title: 'Country',
@@ -68,9 +67,10 @@ export default {
         }
     },
     computed: {
+        ...mapState(['selectedIndicator']),
         ...mapGetters(['indicatorsGroupedByCode']),
         data() {
-            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
+            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
 
             if (!indicator)
                 return []
@@ -89,7 +89,7 @@ export default {
             return sortedData
         },
         years() {
-            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
+            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
 
             if (!indicator)
                 return []
