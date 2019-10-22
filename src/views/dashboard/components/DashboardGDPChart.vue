@@ -1,10 +1,10 @@
 <template>
-    <div class="dashboard-patent-applications-chart">
+    <div class="dashboard-gdp-chart">
         <div class="chart-header">
-            <p>Patent applications, residents x Patent applications, nonresidents</p>
+            <p>GDP (current US$)</p>
         </div>
         <div class="chart-container">
-            <BarChart chart-id="line-dashboard-chart" :chart-data="chartData" />
+            <HorizontalBarChart chart-id="line-dashboard-chart" :chart-data="chartData" />
         </div>
         <div class="chart-footer">
             <select class="select select-year" v-model="selectedYear">
@@ -18,19 +18,18 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import BarChart from '@/components/shared/BarChart'
+import HorizontalBarChart from '@/components/shared/HorizontalBarChart'
 
 const { mapGetters, mapState } = createNamespacedHelpers('dashboard')
 
 export default {
-    name: 'DashboardPatentApplicationsChart',
+    name: 'DashboardGDPChart',
     components: {
-        BarChart
+        HorizontalBarChart
     },
     data() {
         return {
-            residentsCode: 'IP.PAT.RESD',
-            nonResidentsCode: 'IP.PAT.NRES',
+            indicatorCode: 'NY.GDP.MKTP.CD',
             selectedYear: 0
         }
     },
@@ -49,7 +48,7 @@ export default {
             }
         },
         filteredYears() {
-            const filteredYears = this.data.filter(item => item.code === this.residentsCode || item.code === this.nonResidentsCode)
+            const filteredYears = this.data.filter(item => item.code === this.indicatorCode)
 
             const setYears = filteredYears.reduce((years, item) => {
                 if (item.value !== '')
@@ -63,67 +62,41 @@ export default {
             return sortedYears
         },
         countries() {
-            const indicator = this.indicatorsGroupedByCode[this.residentsCode]
+            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
 
             if (!indicator)
                 return []
             
-            const setCountries = indicator.data.reduce((countries, item) => {
-                countries.add(item.country_name)
-
-                return countries
-            }, new Set())
+            const sortedData = this.getSortedDataset(indicator)
             
-            return [...setCountries]
+            return sortedData.map(item => item.country_name)
         },
         datasets() {
-            return [
-                this.datasetResidents,
-                this.datasetNonResidents,
-            ]
-        },
-        datasetResidents() {
-            const indicator = this.indicatorsGroupedByCode[this.residentsCode]
+            const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
 
             if (!indicator)
-                return {}
+                return [{}]
             
             const sortedData = this.getSortedDataset(indicator)
 
-            return {
-                label: 'Residents',
+            return [{
+                label: 'GDP',
                 backgroundColor: '#2b7cb5',
 				borderColor: '#2b7cb5',
 				borderWidth: 1,
                 data: sortedData.map(item => Number(item.value))
-            }
-        },
-        datasetNonResidents() {
-            const indicator = this.indicatorsGroupedByCode[this.nonResidentsCode]
-
-            if (!indicator)
-                return {}
-            
-            const sortedData = this.getSortedDataset(indicator)
-
-            return {
-                label: 'Nonresidents',
-                backgroundColor: '#61a461',
-				borderColor: '#61a461',
-				borderWidth: 1,
-                data: sortedData.map(item => Number(item.value))
-            }
+            }]
         }
     },
     methods: {
         getSortedDataset(indicator) {
             const dataOfSelectedYear = indicator.data.filter(item => item.year === String(this.selectedYear))
             const sortedData = dataOfSelectedYear.sort((itemA, itemB) => {
-                const countryA = itemA.country_name
-                const countryB = itemB.country_name
+                const valueA = Number(itemA.value)
+                const valueB = Number(itemB.value)
 
-                if (countryA < countryB) return -1
-                if (countryA > countryB) return 1
+                if (valueA > valueB) return -1
+                if (valueA < valueB) return 1
 
                 return 0
             })
@@ -137,9 +110,10 @@ export default {
 <style lang="stylus">
 border-radius = 2px
 
-.dashboard-patent-applications-chart
+.dashboard-gdp-chart
     width 98vw
     margin 30px auto 0
+    padding-bottom 30px
     
     .chart-header
         height 48px

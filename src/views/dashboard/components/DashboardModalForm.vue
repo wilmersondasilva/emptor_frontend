@@ -16,7 +16,7 @@
                 </div>
                 <div class="group">
                     <label for="value">Value</label>
-                    <input type="text" id="value" v-model="indicatorToEdit.value">
+                    <input type="number" id="value" v-model="indicatorToEdit.value">
                 </div>
             </form>
         </template>
