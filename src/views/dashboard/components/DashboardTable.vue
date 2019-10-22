@@ -1,12 +1,5 @@
 <template>
     <div class="dashboard-table">
-        <div class="header">
-            <select class="select select-year" v-model="selectedYear">
-                <option v-for="year in years" :key="year" :value="year">
-                    {{ year }}
-                </option>
-            </select>
-        </div>
         <table class="indicator-table">
             <thead>
                 <tr>
@@ -26,6 +19,13 @@
                 </tr>
             </tbody>
         </table>
+        <div class="footer">
+            <select class="select select-year" v-model="selectedYear">
+                <option v-for="year in years" :key="year" :value="year">
+                    {{ year }}
+                </option>
+            </select>
+        </div>
     </div>
 </template>
 
@@ -45,9 +45,9 @@ export default {
                     class: 'country',
                 },
                 {
-                    title: 'Year',
-                    attribute: 'year',
-                    class: 'year',
+                    title: 'Country Code',
+                    attribute: 'country_code',
+                    class: 'country',
                 },
                 {
                     title: 'Value',
@@ -117,8 +117,12 @@ export default {
 
 <style lang="stylus" scoped>
 .dashboard-table
+    width 100%
+    background-color #fff
+    border 1px solid #e4e9ec
+
     .indicator-table
-        margin auto
+        margin 50px auto
 
         .row
             padding 15px 10px
@@ -143,5 +147,17 @@ export default {
             &:focus
                 color #3f51b5
                 outline none
+ 
+    .footer
+        height 48px
+        padding 4px 0
+        background-color #f8f9fa
+        border-bottom-left-radius border-radius
+        border-bottom-right-radius border-radius
+        border 1px solid #e4e9ec
+        display flex
+        justify-content space-evenly
 
+        .select
+            width 45%
 </style>

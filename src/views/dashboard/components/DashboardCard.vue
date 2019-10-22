@@ -56,7 +56,6 @@ border-radius = 2px
     margin 30px auto 0
 
     > .header
-        // height 48px
         padding 0 8px
         background-color #fff
         border-top-left-radius border-radius
@@ -67,13 +66,14 @@ border-radius = 2px
         justify-content space-between
 
         .dashboard-indicator-select
-            width 45%
+            width 65%
 
             select
                 width 100%
 
     .tabs
         display flex
+        cursor pointer
 
         .tab
             padding 0 12px

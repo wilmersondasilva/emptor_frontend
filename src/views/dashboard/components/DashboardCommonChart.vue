@@ -114,8 +114,6 @@ border-radius = 2px
     margin 0 auto
 
     .chart-container
-        border-top-left-radius border-radius
-        border-top-right-radius border-radius
         padding 24px 10px
         background-color #fff
         position relative
