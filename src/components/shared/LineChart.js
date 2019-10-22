@@ -24,7 +24,7 @@ export default {
                         {
                             ticks: {
                                 padding: 10,
-                                callback: function(value, index, values) {
+                                callback: function(value, _index, values) {
                                     const max = String(Math.max(...values))
                                         .length
                                     const dotQuantity = Math.floor(max / 3)
@@ -53,6 +53,20 @@ export default {
                             }
                         }
                     ]
+                },
+                tooltips: {
+                    intersect: false,
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return Number(tooltipItem.value).toLocaleString()
+                        },
+                        title: function(tooltipItem, data) {
+                            const item = tooltipItem[0]
+                            const country =
+                                data.datasets[item.datasetIndex].label
+                            return `${country} (${item.label})`
+                        }
+                    }
                 }
             }
         }

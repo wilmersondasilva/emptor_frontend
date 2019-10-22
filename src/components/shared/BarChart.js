@@ -8,7 +8,26 @@ export default {
     data() {
         return {
             options: {
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                callback: function(value) {
+                                    return Number(value).toLocaleString()
+                                }
+                            }
+                        }
+                    ]
+                },
+                tooltips: {
+                    intersect: false,
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return Number(tooltipItem.value).toLocaleString()
+                        }
+                    }
+                }
             }
         }
     },

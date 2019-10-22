@@ -1,12 +1,14 @@
 <template>
     <div class="dashboard-patent-applications-chart">
-        <div class="chart-header"></div>
+        <div class="chart-header">
+            <p>Patent applications, residents x Patent applications, nonresidents</p>
+        </div>
         <div class="chart-container">
             <BarChart chart-id="line-dashboard-chart" :chart-data="chartData" />
         </div>
         <div class="chart-footer">
             <select class="select select-year" v-model="selectedYear">
-                <option v-for="year in years" :key="year" :value="year">
+                <option v-for="year in filteredYears" :key="year" :value="year">
                     {{ year }}
                 </option>
             </select>
@@ -18,8 +20,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import BarChart from '@/components/shared/BarChart'
 
-const { mapGetters } = createNamespacedHelpers('dashboard')
-// const colors = ['#090057', '#003f5c', '#58508d', '#bc5090', '#ff6361']
+const { mapGetters, mapState } = createNamespacedHelpers('dashboard')
 
 export default {
     name: 'DashboardPatentApplicationsChart',
@@ -34,17 +35,32 @@ export default {
         }
     },
     watch: {
-        years() {
-            this.selectedYear = Math.max(this.years)
+        filteredYears() {
+            this.selectedYear = this.filteredYears[0]
         }
     },
     computed: {
+        ...mapState(['data']),
         ...mapGetters(['indicatorsGroupedByCode']),
         chartData() {
             return  {
                 labels: this.countries,
                 datasets: this.datasets
             }
+        },
+        filteredYears() {
+            const filteredYears = this.data.filter(item => item.code === this.residentsCode || item.code === this.nonResidentsCode)
+
+            const setYears = filteredYears.reduce((years, item) => {
+                if (item.value !== '')
+                    years.add(item.year)
+
+                return years
+            }, new Set())
+
+            const sortedYears = [...setYears].sort().reverse()
+
+            return sortedYears
         },
         countries() {
             const indicator = this.indicatorsGroupedByCode[this.residentsCode]
@@ -76,8 +92,8 @@ export default {
 
             return {
                 label: 'Residents',
-                backgroundColor: '#9ad0f5',
-				borderColor: '#9ad0f5',
+                backgroundColor: '#2b7cb5',
+				borderColor: '#2b7cb5',
 				borderWidth: 1,
                 data: sortedData.map(item => Number(item.value))
             }
@@ -92,27 +108,11 @@ export default {
 
             return {
                 label: 'Nonresidents',
-                backgroundColor: '#ffb1c1',
-				borderColor: '#ffb1c1',
+                backgroundColor: '#61a461',
+				borderColor: '#61a461',
 				borderWidth: 1,
                 data: sortedData.map(item => Number(item.value))
             }
-        },
-        years() {
-            const indicator = this.indicatorsGroupedByCode[this.residentsCode]
-
-            if (!indicator)
-                return []
-            
-            const setYears = indicator.data.reduce((years, item) => {
-                years.add(item.year)
-
-                return years
-            }, new Set())
-            
-            const sortedYears = [...setYears].sort()
-
-            return sortedYears
         }
     },
     methods: {
@@ -138,13 +138,20 @@ export default {
 border-radius = 2px
 
 .dashboard-patent-applications-chart
-    width 45vw
+    width 98vw
     margin 30px auto 0
     padding-bottom 30px
-
-    .chart-container
+    
+    .chart-header
+        height 48px
+        line-height 48px
+        background-color #fff
         border-top-left-radius border-radius
         border-top-right-radius border-radius
+        border 1px solid #e4e9ec
+        border-bottom none
+
+    .chart-container
         padding 24px 10px
         background-color #fff
         position relative
@@ -163,4 +170,16 @@ border-radius = 2px
 
         .select
             width 45%
+
+    @media screen and (min-width: 500px)
+        width 95vw
+
+    @media screen and (min-width: 650px)
+        width 80vw
+
+    @media screen and (min-width: 990px)
+        width 70vw
+
+    @media screen and (min-width: 1200px)
+        width 55vw
 </style>

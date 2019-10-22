@@ -32,10 +32,20 @@ export default {
         },
         indicatorGroups() {
             const keys = Object.keys(this.indicatorsGroupedByCode)
-            return keys.map(key => ({
+            const groups = keys.map(key => ({
                 code: key,
                 description: this.indicatorsGroupedByCode[key].description
             }))
+
+            return groups.sort((itemA, itemB) => {
+                const countryA = itemA.description
+                const countryB = itemB.description
+
+                if (countryA < countryB) return -1
+                if (countryA > countryB) return 1
+
+                return 0
+            })
         }
     },
     methods: {

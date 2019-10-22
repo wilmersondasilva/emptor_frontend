@@ -21,6 +21,17 @@ const getters = {
 
             return dataGrouped
         }, {})
+    },
+    years(state) {
+        const setYears = state.data.reduce((years, item) => {
+            years.add(item.year)
+
+            return years
+        }, new Set())
+
+        const sortedYears = [...setYears].sort().reverse()
+
+        return sortedYears
     }
 }
 

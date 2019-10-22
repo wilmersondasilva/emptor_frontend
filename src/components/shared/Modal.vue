@@ -37,22 +37,20 @@
 .modal-container
     width 300px
     margin 0px auto
-    padding 20px 30px
     background-color #fff
     border-radius 2px
     box-shadow 0 2px 8px rgba(0, 0, 0, .33)
     transition all .3s ease
-    font-family Helvetica, Arial, sans-serif
 
-.modal-header h3
-    margin-top 0
-    color #42b983
+.modal-header
+    height 60px
+    line-height 60px
 
 .modal-body
-    margin 20px 0
+    padding 0 30px
 
-.modal-default-button
-    float right
+.modal-footer
+    padding 30px 10px 10px
 
 .modal-enter
     opacity 0
@@ -62,4 +60,8 @@
 
 .modal-enter .modal-container, .modal-leave-active .modal-container
     transform scale(1.1)
+
+@media screen and (min-width: 500px)
+    .modal-container
+        width 400px
 </style>

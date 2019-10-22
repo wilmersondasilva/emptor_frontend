@@ -47,7 +47,7 @@ export default {
                 {
                     title: 'Country Code',
                     attribute: 'country_code',
-                    class: 'country',
+                    class: 'country-code',
                 },
                 {
                     title: 'Value',
@@ -58,17 +58,12 @@ export default {
                     } 
                 }
             ],
-            selectedYear: 2017
-        }
-    },
-    watch: {
-        years() {
-            // this.selectedYear = Math.max(this.years)
+            selectedYear: 2018
         }
     },
     computed: {
         ...mapState(['selectedIndicator']),
-        ...mapGetters(['indicatorsGroupedByCode']),
+        ...mapGetters(['indicatorsGroupedByCode',  'years']),
         data() {
             const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
 
@@ -87,22 +82,6 @@ export default {
             })
 
             return sortedData
-        },
-        years() {
-            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
-
-            if (!indicator)
-                return []
-            
-            const setYears = indicator.data.reduce((years, item) => {
-                years.add(item.year)
-
-                return years
-            }, new Set())
-            
-            const sortedYears = [...setYears].sort()
-
-            return sortedYears
         }
     },
     methods: {
@@ -127,25 +106,29 @@ export default {
         .row
             padding 15px 10px
 
-        .country, .year, .value
+        .country, .country-code, .year, .value
             padding 10px 20px
 
         .year, .value
             text-align right
 
-        .country
+        .country, .country-code
             text-align left 
+
+        .country-code
+            display none
 
         .row + .row
             margin-top 15px
             border-top 1px solid #fefefe
 
         .edit-button
-            color #7facff
+            color #3968bd
             margin 0 20px
 
             &:focus
-                color #3f51b5
+                color #5e6275
+                font-weight 500
                 outline none
  
     .footer
@@ -154,10 +137,15 @@ export default {
         background-color #f8f9fa
         border-bottom-left-radius border-radius
         border-bottom-right-radius border-radius
-        border 1px solid #e4e9ec
+        border-top 1px solid #e4e9ec
         display flex
         justify-content space-evenly
 
         .select
             width 45%
+
+    @media screen and (min-width: 530px)
+        .indicator-table
+            .country-code
+                display block
 </style>

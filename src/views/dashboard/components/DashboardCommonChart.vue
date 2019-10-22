@@ -24,7 +24,7 @@ import { createNamespacedHelpers } from 'vuex'
 import LineChart from '@/components/shared/LineChart'
 
 const { mapGetters, mapState } = createNamespacedHelpers('dashboard')
-const colors = ['#090057', '#003f5c', '#58508d', '#bc5090', '#ff6361']
+const colors = ['#4cbbc6', '#e2428b', '#5a6e9d', '#61a461', '#2b7cb5']
 
 export default {
     name: 'DashboardPopulationTotalChart',
@@ -45,29 +45,18 @@ export default {
     },
     computed: {
         ...mapState(['selectedIndicator']),
-        ...mapGetters(['indicatorsGroupedByCode']),
+        ...mapGetters(['indicatorsGroupedByCode', 'years']),
         chartData() {
             return  {
-                labels: [...this.filteredYears],
+                labels: this.filteredYears,
                 datasets: [...this.datasets]
             }
         },
         filteredYears() {
-            return [...this.years].filter(year => year >= this.firstYear && year <= this.lastYear)
-        },
-        years() {
-            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
-            if (!indicator)
-                return []
-            
-            return indicator.data.reduce((years, item) => {
-                years.add(item.year)
-
-                return years;
-            }, new Set())
+            return this.years.filter(year => year >= this.firstYear && year <= this.lastYear)
         },
         yearsBiggerThanFirstYear() {
-            return [...this.years].filter(year => year >= this.firstYear)
+            return this.years.filter(year => year >= this.firstYear)
         },
         datasets() {
             const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
@@ -80,8 +69,8 @@ export default {
                         countries[item.country_code] = {
                             label: item.country_name,
                             fill: false,
-                            pointRadius: 1,
-                            pointHoverRadius: 2,
+                            pointRadius: 2,
+                            pointHoverRadius: 3,
                             data: []
                         }
                     }

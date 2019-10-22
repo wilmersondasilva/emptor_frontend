@@ -98,7 +98,7 @@ export default {
 
             .button
                 height 40px
-                min-width 90px
+                min-width 120px
                 border-radius 4px
                 border 1px solid #eeeeee
 
@@ -106,7 +106,7 @@ export default {
                     outline none
 
             .button-submit
-                background-color #2e5bff
+                background-color #3968bd
                 color #fff
 
             .button + .button

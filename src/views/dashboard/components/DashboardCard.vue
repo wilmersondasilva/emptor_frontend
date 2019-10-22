@@ -52,7 +52,7 @@ export default {
 border-radius = 2px
 
 .dashboard-card
-    width 75vw
+    width 98vw
     margin 30px auto 0
 
     > .header
@@ -61,12 +61,12 @@ border-radius = 2px
         border-top-left-radius border-radius
         border-top-right-radius border-radius
         border 1px solid #e4e9ec
-        border-bottom  none
+        border-bottom none
         display flex
         justify-content space-between
 
         .dashboard-indicator-select
-            width 65%
+            width 55%
 
             select
                 width 100%
@@ -76,12 +76,33 @@ border-radius = 2px
         cursor pointer
 
         .tab
-            padding 0 12px
+            padding 0 8px
             height 48px
             line-height 48px
 
             &.active
-                color #00C1D4
-                border-bottom 2px solid #00C1D4
+                color #2b7Cb5
+                border-bottom 2px solid #2b7Cb5
                 font-weight 600
+
+    @media screen and (min-width: 440px)
+        > .header
+            .dashboard-indicator-select
+                width 65%
+
+        .tabs
+            .tab
+                padding 0 14px
+
+    @media screen and (min-width: 500px)
+        width 95vw
+
+    @media screen and (min-width: 650px)
+        width 80vw
+
+    @media screen and (min-width: 990px)
+        width 70vw
+
+    @media screen and (min-width: 1200px)
+        width 55vw
 </style>
