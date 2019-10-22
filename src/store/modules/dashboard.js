@@ -53,6 +53,9 @@ const mutations = {
     },
     setIndicatorToEdit(state, payload) {
         state.indicatorToEdit = payload
+    },
+    setSelectedIndicator(state, payload) {
+        state.selectedIndicator = payload
     }
 }
 

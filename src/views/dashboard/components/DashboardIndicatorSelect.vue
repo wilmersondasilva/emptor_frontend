@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard-indicator-select">
-        <select v-model="selectedIndicator" name="indicator" id="indicator-select">
+        <select v-model="indicator" name="indicator" id="indicator-select">
             <option
                 v-for="group in indicatorGroups"
                 :key="group.code"
@@ -15,17 +15,21 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapGetters, mapState } = createNamespacedHelpers('dashboard')
+const { mapGetters, mapState, mapMutations } = createNamespacedHelpers('dashboard')
 
 export default {
     name: 'DashboardIndicatorSelect',
-    data() {
-        return {
-            ...mapState(['selectedIndicator'])
-        }
-    },
     computed: {
+        ...mapState(['selectedIndicator']),
         ...mapGetters(['indicatorsGroupedByCode']),
+        indicator: {
+            get() {
+                return this.selectedIndicator
+            },
+            set(value) {
+                this.setSelectedIndicator(value)
+            }
+        },
         indicatorGroups() {
             const keys = Object.keys(this.indicatorsGroupedByCode)
             return keys.map(key => ({
@@ -33,6 +37,9 @@ export default {
                 description: this.indicatorsGroupedByCode[key].description
             }))
         }
+    },
+    methods: {
+        ...mapMutations(['setSelectedIndicator'])
     }
     
 }
