@@ -2,7 +2,10 @@
     <div class="dashboard-common-chart">
         <div class="chart-header"></div>
         <div class="chart-container">
-            <LineChart chart-id="line-dashboard-chart" :chart-data="chartData" />
+            <LineChart
+                chart-id="line-dashboard-chart"
+                :chart-data="chartData"
+            />
         </div>
         <div class="chart-footer">
             <select class="select select-start" v-model="firstYear">
@@ -11,7 +14,11 @@
                 </option>
             </select>
             <select class="select select-end" v-model="lastYear">
-                <option v-for="year in yearsBiggerThanFirstYear" :key="year" :value="year">
+                <option
+                    v-for="year in yearsBiggerThanFirstYear"
+                    :key="year"
+                    :value="year"
+                >
                     {{ year }}
                 </option>
             </select>
@@ -34,7 +41,7 @@ export default {
     data() {
         return {
             firstYear: 0,
-            lastYear: 0,
+            lastYear: 0
         }
     },
     watch: {
@@ -47,22 +54,25 @@ export default {
         ...mapState(['selectedIndicator']),
         ...mapGetters(['indicatorsGroupedByCode', 'years']),
         chartData() {
-            return  {
+            return {
                 labels: this.filteredYears,
                 datasets: [...this.datasets]
             }
         },
         filteredYears() {
-            return this.years.filter(year => year >= this.firstYear && year <= this.lastYear)
+            return this.years.filter(
+                year => year >= this.firstYear && year <= this.lastYear
+            )
         },
         yearsBiggerThanFirstYear() {
             return this.years.filter(year => year >= this.firstYear)
         },
         datasets() {
-            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
-            if (!indicator)
-                return []
-            
+            const indicator = this.indicatorsGroupedByCode[
+                this.selectedIndicator
+            ]
+            if (!indicator) return []
+
             const countries = indicator.data.reduce((countries, item) => {
                 if (item.year >= this.firstYear && item.year <= this.lastYear) {
                     if (!countries[item.country_code]) {
@@ -78,18 +88,16 @@ export default {
                     countries[item.country_code].data.push(item.value)
                 }
 
-                return countries;
+                return countries
             }, {})
 
-            return Object
-                .keys(countries)
-                .map((country, index) => {
-                    return { 
-                        ...countries[country],
-                        backgroundColor: colors[index],
-                        borderColor: colors[index] 
-                    }
-                })
+            return Object.keys(countries).map((country, index) => {
+                return {
+                    ...countries[country],
+                    backgroundColor: colors[index],
+                    borderColor: colors[index]
+                }
+            })
         }
     }
 }

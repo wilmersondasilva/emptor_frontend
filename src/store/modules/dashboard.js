@@ -37,11 +37,16 @@ const getters = {
 
 const actions = {
     async fetchData({ commit }) {
-        const response = await axios.get('http://localhost:8000/api/display_data/')
+        const response = await axios.get(
+            'http://localhost:8000/api/display_data/'
+        )
         commit('setData', response.data)
     },
     async editData(_config, data) {
-        return axios.patch(`http://localhost:8000/api/display_data/${data.id}/`, data)
+        return axios.patch(
+            `http://localhost:8000/api/display_data/${data.id}/`,
+            data
+        )
     },
     showModal({ commit }) {
         commit('setModalVisibility', true)

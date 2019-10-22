@@ -2,8 +2,18 @@
     <div class="dashboard-card">
         <div class="header">
             <div class="tabs">
-                <div :class="['tab', { 'active': shouldShownChart }]" @click="selectTab('chart')">Chart</div>
-                <div :class="['tab', { 'active': !shouldShownChart }]" @click="selectTab('tab')">Table</div>
+                <div
+                    :class="['tab', { active: shouldShownChart }]"
+                    @click="selectTab('chart')"
+                >
+                    Chart
+                </div>
+                <div
+                    :class="['tab', { active: !shouldShownChart }]"
+                    @click="selectTab('tab')"
+                >
+                    Table
+                </div>
             </div>
             <DashboardIndicatorSelect />
         </div>

@@ -4,7 +4,10 @@
             <p>GDP (current US$)</p>
         </div>
         <div class="chart-container">
-            <HorizontalBarChart chart-id="line-dashboard-chart" :chart-data="chartData" />
+            <HorizontalBarChart
+                chart-id="line-dashboard-chart"
+                :chart-data="chartData"
+            />
         </div>
         <div class="chart-footer">
             <select class="select select-year" v-model="selectedYear">
@@ -42,17 +45,18 @@ export default {
         ...mapState(['data']),
         ...mapGetters(['indicatorsGroupedByCode']),
         chartData() {
-            return  {
+            return {
                 labels: this.countries,
                 datasets: this.datasets
             }
         },
         filteredYears() {
-            const filteredYears = this.data.filter(item => item.code === this.indicatorCode)
+            const filteredYears = this.data.filter(
+                item => item.code === this.indicatorCode
+            )
 
             const setYears = filteredYears.reduce((years, item) => {
-                if (item.value !== '')
-                    years.add(item.year)
+                if (item.value !== '') years.add(item.year)
 
                 return years
             }, new Set())
@@ -64,33 +68,35 @@ export default {
         countries() {
             const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
 
-            if (!indicator)
-                return []
-            
+            if (!indicator) return []
+
             const sortedData = this.getSortedDataset(indicator)
-            
+
             return sortedData.map(item => item.country_name)
         },
         datasets() {
             const indicator = this.indicatorsGroupedByCode[this.indicatorCode]
 
-            if (!indicator)
-                return [{}]
-            
+            if (!indicator) return [{}]
+
             const sortedData = this.getSortedDataset(indicator)
 
-            return [{
-                label: 'GDP',
-                backgroundColor: '#2b7cb5',
-				borderColor: '#2b7cb5',
-				borderWidth: 1,
-                data: sortedData.map(item => Number(item.value))
-            }]
+            return [
+                {
+                    label: 'GDP',
+                    backgroundColor: '#2b7cb5',
+                    borderColor: '#2b7cb5',
+                    borderWidth: 1,
+                    data: sortedData.map(item => Number(item.value))
+                }
+            ]
         }
     },
     methods: {
         getSortedDataset(indicator) {
-            const dataOfSelectedYear = indicator.data.filter(item => item.year === String(this.selectedYear))
+            const dataOfSelectedYear = indicator.data.filter(
+                item => item.year === String(this.selectedYear)
+            )
             const sortedData = dataOfSelectedYear.sort((itemA, itemB) => {
                 const valueA = Number(itemA.value)
                 const valueB = Number(itemB.value)
@@ -114,7 +120,7 @@ border-radius = 2px
     width 98vw
     margin 30px auto 0
     padding-bottom 30px
-    
+
     .chart-header
         height 48px
         line-height 48px

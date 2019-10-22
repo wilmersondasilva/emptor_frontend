@@ -1,7 +1,10 @@
 <template>
     <div class="dashboard-patent-applications-chart">
         <div class="chart-header">
-            <p>Patent applications, residents x Patent applications, nonresidents</p>
+            <p>
+                Patent applications, residents x Patent applications,
+                nonresidents
+            </p>
         </div>
         <div class="chart-container">
             <BarChart chart-id="line-dashboard-chart" :chart-data="chartData" />
@@ -43,17 +46,20 @@ export default {
         ...mapState(['data']),
         ...mapGetters(['indicatorsGroupedByCode']),
         chartData() {
-            return  {
+            return {
                 labels: this.countries,
                 datasets: this.datasets
             }
         },
         filteredYears() {
-            const filteredYears = this.data.filter(item => item.code === this.residentsCode || item.code === this.nonResidentsCode)
+            const filteredYears = this.data.filter(
+                item =>
+                    item.code === this.residentsCode ||
+                    item.code === this.nonResidentsCode
+            )
 
             const setYears = filteredYears.reduce((years, item) => {
-                if (item.value !== '')
-                    years.add(item.year)
+                if (item.value !== '') years.add(item.year)
 
                 return years
             }, new Set())
@@ -65,59 +71,57 @@ export default {
         countries() {
             const indicator = this.indicatorsGroupedByCode[this.residentsCode]
 
-            if (!indicator)
-                return []
-            
+            if (!indicator) return []
+
             const setCountries = indicator.data.reduce((countries, item) => {
                 countries.add(item.country_name)
 
                 return countries
             }, new Set())
-            
+
             return [...setCountries]
         },
         datasets() {
-            return [
-                this.datasetResidents,
-                this.datasetNonResidents,
-            ]
+            return [this.datasetResidents, this.datasetNonResidents]
         },
         datasetResidents() {
             const indicator = this.indicatorsGroupedByCode[this.residentsCode]
 
-            if (!indicator)
-                return {}
-            
+            if (!indicator) return {}
+
             const sortedData = this.getSortedDataset(indicator)
 
             return {
                 label: 'Residents',
                 backgroundColor: '#2b7cb5',
-				borderColor: '#2b7cb5',
-				borderWidth: 1,
+                borderColor: '#2b7cb5',
+                borderWidth: 1,
                 data: sortedData.map(item => Number(item.value))
             }
         },
         datasetNonResidents() {
-            const indicator = this.indicatorsGroupedByCode[this.nonResidentsCode]
+            const indicator = this.indicatorsGroupedByCode[
+                this.nonResidentsCode
+            ]
 
-            if (!indicator)
-                return {}
-            
+            if (!indicator) return {}
+
             const sortedData = this.getSortedDataset(indicator)
 
             return {
                 label: 'Nonresidents',
                 backgroundColor: '#61a461',
-				borderColor: '#61a461',
-				borderWidth: 1,
+                borderColor: '#61a461',
+                borderWidth: 1,
                 data: sortedData.map(item => Number(item.value))
             }
         }
     },
     methods: {
         getSortedDataset(indicator) {
-            const dataOfSelectedYear = indicator.data.filter(item => item.year === String(this.selectedYear))
+            const dataOfSelectedYear = indicator.data.filter(
+                item => item.year === String(this.selectedYear)
+            )
             const sortedData = dataOfSelectedYear.sort((itemA, itemB) => {
                 const countryA = itemA.country_name
                 const countryB = itemB.country_name
@@ -140,7 +144,7 @@ border-radius = 2px
 .dashboard-patent-applications-chart
     width 98vw
     margin 30px auto 0
-    
+
     .chart-header
         height 48px
         line-height 48px

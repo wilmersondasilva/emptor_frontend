@@ -3,18 +3,32 @@
         <table class="indicator-table">
             <thead>
                 <tr>
-                    <th v-for="column in columns" :key="column.title" :class="column.class">{{ column.title }}</th>
+                    <th
+                        v-for="column in columns"
+                        :key="column.title"
+                        :class="column.class"
+                    >
+                        {{ column.title }}
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="row" v-for="row in data" :key="row.id">
-                    <td v-for="column in columns" :key="column.title" :class="column.class">
-                        {{ 
-                            column.formatter ? column.formatter(row[column.attribute]) : row[column.attribute] 
+                    <td
+                        v-for="column in columns"
+                        :key="column.title"
+                        :class="column.class"
+                    >
+                        {{
+                            column.formatter
+                                ? column.formatter(row[column.attribute])
+                                : row[column.attribute]
                         }}
                     </td>
                     <td class="edit">
-                        <button class="edit-button" @click="editData(row.id)">Edit</button>
+                        <button class="edit-button" @click="editData(row.id)">
+                            Edit
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -32,7 +46,9 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapGetters, mapState, mapActions } = createNamespacedHelpers('dashboard')
+const { mapGetters, mapState, mapActions } = createNamespacedHelpers(
+    'dashboard'
+)
 
 export default {
     name: 'DashboardTable',
@@ -42,20 +58,20 @@ export default {
                 {
                     title: 'Country',
                     attribute: 'country_name',
-                    class: 'country',
+                    class: 'country'
                 },
                 {
                     title: 'Country Code',
                     attribute: 'country_code',
-                    class: 'country-code',
+                    class: 'country-code'
                 },
                 {
                     title: 'Value',
                     attribute: 'value',
                     class: 'value',
-                    formatter: (value) => {
+                    formatter: value => {
                         return Number(value).toLocaleString()
-                    } 
+                    }
                 }
             ],
             selectedYear: 2018
@@ -63,14 +79,17 @@ export default {
     },
     computed: {
         ...mapState(['selectedIndicator']),
-        ...mapGetters(['indicatorsGroupedByCode',  'years']),
+        ...mapGetters(['indicatorsGroupedByCode', 'years']),
         data() {
-            const indicator = this.indicatorsGroupedByCode[this.selectedIndicator]
+            const indicator = this.indicatorsGroupedByCode[
+                this.selectedIndicator
+            ]
 
-            if (!indicator)
-                return []
+            if (!indicator) return []
 
-            const data = indicator.data.filter(item => item.year === String(this.selectedYear))
+            const data = indicator.data.filter(
+                item => item.year === String(this.selectedYear)
+            )
             const sortedData = data.sort((itemA, itemB) => {
                 const countryA = itemA.country_name
                 const countryB = itemB.country_name
@@ -113,7 +132,7 @@ export default {
             text-align right
 
         .country, .country-code
-            text-align left 
+            text-align left
 
         .country-code
             display none
@@ -130,7 +149,7 @@ export default {
                 color #5e6275
                 font-weight 500
                 outline none
- 
+
     .footer
         height 48px
         padding 4px 0

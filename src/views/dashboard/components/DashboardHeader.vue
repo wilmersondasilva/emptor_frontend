@@ -11,7 +11,7 @@ height = 50px
     width 100vw
     height height
     line-height height
-    background-color #fff   
+    background-color #fff
     border-bottom 2px solid #e4e8f0
 
     h1

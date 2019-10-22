@@ -15,7 +15,9 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapGetters, mapState, mapMutations } = createNamespacedHelpers('dashboard')
+const { mapGetters, mapState, mapMutations } = createNamespacedHelpers(
+    'dashboard'
+)
 
 export default {
     name: 'DashboardIndicatorSelect',
@@ -51,7 +53,6 @@ export default {
     methods: {
         ...mapMutations(['setSelectedIndicator'])
     }
-    
 }
 </script>
 
