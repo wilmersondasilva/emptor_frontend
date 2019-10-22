@@ -24,6 +24,8 @@ npm install
 npm run serve
 ```
 
+The project should be running in [http://localhost:8080/](http://localhost:8080/)
+
 ### Compiles and minifies for production
 
 ```JavaScript
